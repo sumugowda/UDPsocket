@@ -11,10 +11,12 @@ public class udpclient {
         DatagramPacket request = new DatagramPacket(b, b.length,host,6788);
         s.send(request);
         byte[] buffer = new byte[1000];
-        DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-        s.receive(reply);
-        System.out.println("Client recieved:" + new String(reply.getData()));
-        s.close();
         
+        // Continuously receive messages from the server
+        while (true) {
+            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+            s.receive(reply);
+            System.out.println("Client received: " + new String(reply.getData()));
+        }
     }
 }
